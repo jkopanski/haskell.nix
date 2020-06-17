@@ -75,7 +75,6 @@ pkgs:
      icuuc = pkgs.icu;
      icui18n = pkgs.icu;
      icudata = pkgs.icu;
-     vulkan = pkgs.vulkan-loader;
      sodium = pkgs.libsodium;
      gfortran = pkgs.gfortran.cc.lib;
    }
