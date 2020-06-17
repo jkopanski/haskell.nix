@@ -293,4 +293,4 @@ stdenv.mkDerivation (rec {
   dontStrip = true;
   dontPatchELF = true;
   noAuditTmpdir = true;
-});
+})
