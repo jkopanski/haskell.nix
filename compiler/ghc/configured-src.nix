@@ -107,4 +107,4 @@ stdenv.mkDerivation (rec {
             ++ stdenv.lib.optional (ghc-patches != []) "autoreconfPhase"
             ++ [ "configurePhase" "installPhase" ];
     installPhase = "cp -r . $out";
-});
+})
