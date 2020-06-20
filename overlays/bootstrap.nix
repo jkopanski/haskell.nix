@@ -311,6 +311,31 @@ in {
 
                 ghc-patches = ghc-patches "8.10.1";
             };
+            ghcHEAD =
+              let
+                buildPkgs = import final.path ((import ../. {}).nixpkgsArgs // { system = final.stdenv.system; });
+              in final.callPackage ../compiler/ghc/head.nix {
+                extra-passthru = { buildGHC = final.buildPackages.haskell-nix.compiler.ghcHEAD; };
+
+                bootPkgs = bootPkgs // {
+                  ghc = buildPkgs.haskell-nix.compiler.ghc883;
+                  alex = buildPkgs.haskell-nix.haskellPackages.alex.components.exes.alex;
+                  happy = buildPkgs.haskell-nix.haskellPackages.happy.components.exes.happy;
+                };
+                inherit sphinx installDeps;
+
+                buildLlvmPackages = final.buildPackages.llvmPackages_10;
+                llvmPackages = final.llvmPackages_10;
+                libffi = final.libffi;
+
+                src-spec = rec {
+                  version = "8.11.20200";
+                  url = "https://gitlab.haskell.org/ghc/ghc.git/";
+                  rev = "da18ff9935e72c7fe6127cb5d5d0c53654a204b";
+                  sha256 = "1wasa8h6kl0mfv4pxfix19qy3xawfq3m89rq8zxb108hrik84789";
+                };
+                # ghc-patches = ghc-patches "8.10.1";
+            };
         } // final.lib.optionalAttrs (final.targetPlatform.isGhcjs or false)
                 # This will inject `exactDeps` and `envDeps`  into the ghcjs
                 # compiler defined below.  This is crucial to build packages
